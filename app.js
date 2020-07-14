@@ -1,121 +1,164 @@
-var sum = 0
-var cookiesSold = []
-var seattle = {
-    customers: 0,
-    minCust: 23,
-    maxCust: 65,
-    avgCookies: 6.3,
-    hours: ['6 am', '7 am', '8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm'],
-    getRandomNumber: function (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min
-    },
-    custPerHour: function () {
-        this.customers = seattle.getRandomNumber(this.minCust, this.maxCust)
-    },
-    cookiesPerHour: function () {
-        for (let i = 0; i < this.hours.length; i++) {
-            var result1 = seattle.getRandomNumber(this.minCust, this.maxCust)
-            var result2 = result1 * this.avgCookies
-            cookiesSold.push(Math.floor(result2))
-        }
-    },
-    total: function () {
-        for (let i = 0; i < cookiesSold.length; i++) {
-            sum = sum + cookiesSold[i]
-        }
-    },
-    render: function () {
-        var container = document.getElementById('cookies')
-        var articleEl = document.createElement('article')
-        container.appendChild(articleEl)
+'use strict'
+var hours = ['6 am', '7 am', '8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm']
+var finalSum = 0
+var totalFinal = []
+var coloumnArr = []
+function Location(soldArr, minCust, maxCust, avgCookies, sum) {
+    this.soldArr = []
+    this.minCust = minCust;
+    this.maxCust = maxCust;
+    this.avgCookies = avgCookies;
+    this.sum = sum
+    this.customers = 0
+}
+Location.prototype.calculateCustomers = function () {
+    for (let i = 0; i < hours.length; i++) {
+        this.customers = Math.floor(Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust
+        var result = Math.floor(this.customers * this.avgCookies)
+        this.soldArr.push(result)
+    }
+    // console.log(seattle.soldArr)
+    for (let i = 0; i < this.soldArr.length; i++) {
+        this.sum = this.sum + this.soldArr[i]
+    }
+    totalFinal.push(this.sum)
+}
 
-        var h3El = document.createElement('h3')
-        articleEl.appendChild(h3El)
-        h3El.textContent = 'Seattle'
-
-        var ulEl = document.createElement('ul')
-        articleEl.appendChild(ulEl)
-
-        for (let i = 0; i < seattle.hours.length; i++) {
-            var liEl = document.createElement('li')
-            ulEl.appendChild(liEl)
-            liEl.textContent = `${seattle.hours[i]} : ${cookiesSold[i]} cookies`
-        }
-
-        var liEl = document.createElement('li')
-        ulEl.appendChild(liEl)
-        liEl.textContent = `Total : ${sum} cookies`
-
+function sum2() {
+    for (let i = 0; i < totalFinal.length; i++) {
+        finalSum = finalSum + totalFinal[i]
     }
 
 }
-seattle.custPerHour()
-seattle.cookiesPerHour()
-seattle.total()
+
+function coloumnTotal() {
+    for (let i = 0; i < hours.length; i++) {
+        var totalcolomun = seattle.soldArr[i] + tokyo.soldArr[i] + dubai.soldArr[i] + paris.soldArr[i] + lima.soldArr[i]
+        coloumnArr.push(totalcolomun)
+    }
+    console.log(coloumnArr)
+}
+Location.prototype.render = function () {
+    console.log(this.soldArr)
+
+    var div = document.getElementById('cookies')
+    var tableEl = document.createElement('table')
+    div.appendChild(tableEl)
+
+    var tr1 = document.createElement('tr')
+    tableEl.appendChild(tr1)
+
+    var th = document.createElement('th')
+    tr1.appendChild(th)
+    th.textContent = ''
+    for (let i = 0; i < hours.length; i++) {
+        var th = document.createElement('th')
+        tr1.appendChild(th)
+        th.textContent = `${hours[i]}`
+    }
+    var th = document.createElement('th')
+    tr1.appendChild(th)
+    th.textContent = 'Daily Location Total'
+
+    var seattleTr = document.createElement('tr')
+    tableEl.appendChild(seattleTr)
+    seattleTr.textContent = 'Seattle'
+
+    for (let i = 0; i < this.soldArr.length; i++) {
+        var seattleTd = document.createElement('td')
+        seattleTr.appendChild(seattleTd)
+        seattleTd.textContent = `${seattle.soldArr[i]}`
+    }
+    var seattleTd = document.createElement('td')
+    seattleTr.appendChild(seattleTd)
+    seattleTd.textContent = `${seattle.sum}`
+
+    var tokyoTr = document.createElement('tr')
+    tableEl.appendChild(tokyoTr)
+    tokyoTr.textContent = 'Tokyo'
+
+    for (let i = 0; i < this.soldArr.length; i++) {
+        var tokyoTd = document.createElement('td')
+        tokyoTr.appendChild(tokyoTd)
+        tokyoTd.textContent = `${tokyo.soldArr[i]}`
+    }
+
+    var tokyoTd = document.createElement('td')
+    tokyoTr.appendChild(tokyoTd)
+    tokyoTd.textContent = `${tokyo.sum}`
+
+    var dubaiTr = document.createElement('tr')
+    tableEl.appendChild(dubaiTr)
+    dubaiTr.textContent = 'Dubai'
+
+    for (let i = 0; i < this.soldArr.length; i++) {
+        var dubaiTd = document.createElement('td')
+        dubaiTr.appendChild(dubaiTd)
+        dubaiTd.textContent = `${dubai.soldArr[i]}`
+    }
+
+    var dubaiTd = document.createElement('td')
+    dubaiTr.appendChild(dubaiTd)
+    dubaiTd.textContent = `${dubai.sum}`
+
+
+    var parisTr = document.createElement('tr')
+    tableEl.appendChild(parisTr)
+    parisTr.textContent = 'Paris'
+
+    for (let i = 0; i < this.soldArr.length; i++) {
+        var parisTd = document.createElement('td')
+        parisTr.appendChild(parisTd)
+        parisTd.textContent = `${paris.soldArr[i]}`
+    }
+
+    var parisTd = document.createElement('td')
+    parisTr.appendChild(parisTd)
+    parisTd.textContent = `${paris.sum}`
+
+    var limaTr = document.createElement('tr')
+    tableEl.appendChild(limaTr)
+    limaTr.textContent = 'Lima'
+
+    for (let i = 0; i < this.soldArr.length; i++) {
+        var limaTd = document.createElement('td')
+        limaTr.appendChild(limaTd)
+        limaTd.textContent = `${lima.soldArr[i]}`
+    }
+
+    var limaTd = document.createElement('td')
+    limaTr.appendChild(limaTd)
+    limaTd.textContent = `${lima.sum}`
+
+    var totalTr = document.createElement('tr')
+    tableEl.appendChild(totalTr)
+    totalTr.textContent = 'Total'
+
+    for (let i = 0; i < coloumnArr.length; i++) {
+        var totalTd = document.createElement('td')
+        totalTr.appendChild(totalTd)
+        totalTd.textContent = `${coloumnArr[i]}`
+    }
+
+    var totalTd = document.createElement('td')
+    totalTr.appendChild(totalTd)
+    totalTd.textContent = `${finalSum}`
+
+}
+var seattle = new Location([], 23, 65, 6.3, 0);
+var tokyo = new Location([], 3, 24, 1.2, 0)
+var dubai = new Location([], 11, 38, 3.7, 0)
+var paris = new Location([], 20, 38, 2.3, 0)
+var lima = new Location([], 2, 16, 4.6, 0)
+seattle.calculateCustomers()
+tokyo.calculateCustomers()
+dubai.calculateCustomers()
+paris.calculateCustomers()
+lima.calculateCustomers()
+sum2()
+coloumnTotal()
 seattle.render()
-seattle.getRandomNumber()
-
-
-
-/****************Tokyo*******************/
-
-var sum2 = 0
-var cookiesSold2 = []
-var tokyo = {
-    customers: 0,
-    minCust: 3,
-    maxCust: 24,
-    avgCookies: 1.2,
-    hours: ['6 am', '7 am', '8 am', '9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm'],
-    getRandomNumber: function (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min
-    },
-    custPerHour: function () {
-        this.customers = tokyo.getRandomNumber(this.minCust, this.maxCust)
-    },
-    cookiesPerHour: function () {
-        for (let i = 0; i < this.hours.length; i++) {
-            var result1 = tokyo.getRandomNumber(this.minCust, this.maxCust)
-            var result2 = result1 * this.avgCookies
-            cookiesSold2.push(Math.floor(result2))
-        }
-    },
-    total: function () {
-        for (let i = 0; i < cookiesSold2.length; i++) {
-            sum2 = sum2 + cookiesSold2[i]
-            console.log(sum2)
-        }
-    },
-    render: function () {
-        var container = document.getElementById('cookies')
-        var articleEl = document.createElement('article')
-        container.appendChild(articleEl)
-
-        var h3El = document.createElement('h3')
-        articleEl.appendChild(h3El)
-        h3El.textContent = 'Tokyo'
-
-        var ulEl = document.createElement('ul')
-        articleEl.appendChild(ulEl)
-
-        for (let i = 0; i < tokyo.hours.length; i++) {
-            var liEl = document.createElement('li')
-            ulEl.appendChild(liEl)
-            liEl.textContent = `${tokyo.hours[i]} : ${cookiesSold2[i]} cookies`
-        }
-
-        var liEl = document.createElement('li')
-        ulEl.appendChild(liEl)
-        liEl.textContent = `Total : ${sum2} cookies`
-
-    }
-
-}
-tokyo.custPerHour()
-tokyo.cookiesPerHour()
-tokyo.getRandomNumber()
-tokyo.total()
-tokyo.render()
+console.log()
 
 
 
