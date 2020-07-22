@@ -59,7 +59,6 @@ form.addEventListener("submit", function handleSubmit(event) {
     var avg = Number(event.target.avgcookies.value)
     var store = new Location(name, min, max, avg)
     tableEl.deleteRow(tableEl.rows.length - 1)
-    console.log(tableEl.rows.length)
     cities.push(store)
     store.randomNumber()
     store.render()
