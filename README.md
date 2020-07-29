@@ -13,7 +13,7 @@ This project is all about learning how to use Object literal and convert it to c
 
 3. Improving the logic for the developer by understanding how to make basic summations
 
-3. Learning Local-Storage as a way to store data in the browser
+4. Learning Local-Storage as a way to store data in the browser
 
 # Instructions for installation and use
 
